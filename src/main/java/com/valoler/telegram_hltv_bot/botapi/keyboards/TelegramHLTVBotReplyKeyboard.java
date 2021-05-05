@@ -52,7 +52,7 @@ public class TelegramHLTVBotReplyKeyboard {
         button_getNews.setText("News");
         button_getResults.setText("Results");
         button_getMatches.setText("Matches");
-        button_getStatsByMatchId.setText("Stats (by match id)");
+        button_getStatsByMatchId.setText("Stats");
 
         keyboardRow1.add(button_getNews);
         keyboardRow1.add(button_getResults);

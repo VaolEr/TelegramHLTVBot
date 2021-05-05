@@ -6,6 +6,7 @@ import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.Cal
 import com.valoler.telegram_hltv_bot.service.HltvApiMatchesService;
 import com.valoler.telegram_hltv_bot.service.HltvApiNewsService;
 import com.valoler.telegram_hltv_bot.service.HltvApiResultsService;
+import com.valoler.telegram_hltv_bot.service.HltvApiStatsbyIdService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +36,7 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
     private final HltvApiNewsService hltvApiNewsService;
     private final HltvApiResultsService hltvApiResultsService;
     private final HltvApiMatchesService hltvApiMatchesService;
+    private final HltvApiStatsbyIdService hltvApiStatsbyIdService;
 
     public static String COMMAND_PREFIX = "/";
 
@@ -90,13 +92,15 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
 
             switch (Objects.requireNonNull(update.getMessage()).getText()){
                 case ("KBD"):
+                    log.debug("Inline keyboard was asked.");
                     return telegramHLTVBotInlineKeyboard.sendInlineKeyBoardMessage(message.getChatId().toString());
                     //break;
                 case ("/KBD"):
-                    log.info("Reply keyboard was asked.");
+                    log.debug("Reply keyboard was asked.");
                     return telegramHLTVBotReplyKeyboard.sendReplyKeyBoardMessage(message.getChatId().toString());
                     //break;
                 case ("News"):
+                    log.debug("News are requested.");
                     hltvApiNewsService.getNews();
                     //SendMessage sendMessage = new SendMessage();
                     sendMessage.setChatId(message.getChatId().toString());
@@ -104,6 +108,7 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                     return sendMessage;
                     //break;
                 case ("Results"):
+                    log.debug("Results are requested.");
                     hltvApiResultsService.getResults();
                     //SendMessage sendMessage = new SendMessage();
                     sendMessage.setChatId(message.getChatId().toString());
@@ -111,40 +116,24 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                     return sendMessage;
                 //break;
                 case ("Matches"):
+                    log.debug("Matches are requested.");
                     hltvApiMatchesService.getMatches();
                     sendMessage.setChatId(message.getChatId().toString());
                     sendMessage.setText("Matches are cooking!");
                     return sendMessage;
                     //break;
+                case ("Stats"):
+                    log.debug("Stats are requested.");
+                    hltvApiStatsbyIdService.getStats();
+                    sendMessage.setChatId(message.getChatId().toString());
+                    sendMessage.setText("For get statistic type '/getStats+/matches/matchId/matchFullName'");
+                    return sendMessage;
                 default:
                     sendMessage.setChatId(message.getChatId().toString());
                     sendMessage.setText("Well, all information looks like noise until you break the code.");
                     return sendMessage;
             }
         }
-
-//        if(Objects.requireNonNull(update.getMessage()).getText().equals("KBD")){
-//            return telegramHLTVBotInlineKeyboard.sendInlineKeyBoardMessage(message.getChatId().toString());
-//        }
-//
-//        if(Objects.requireNonNull(update.getMessage()).getText().equals("/KBD")){
-//            return telegramHLTVBotReplyKeyboard.sendReplyKeyBoardMessage(message.getChatId().toString());
-//        }
-//
-//        if(Objects.requireNonNull(update.getMessage()).getText().equals("News")){
-//            hltvApiNewsService.getNews();
-//            SendMessage sendMessage = new SendMessage();
-//            sendMessage.setChatId(message.getChatId().toString());
-//            sendMessage.setText("News are cooking!");
-//            return sendMessage;
-//        }
-//
-//        if (update.hasMessage() && update.getMessage().hasText()) {
-//            SendMessage sendMessage = new SendMessage();
-//            sendMessage.setChatId(message.getChatId().toString());
-//            sendMessage.setText("Well, all information looks like noise until you break the code.");
-//            return sendMessage;
-//        }
         return null;
     }
 
