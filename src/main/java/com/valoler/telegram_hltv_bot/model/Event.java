@@ -12,9 +12,8 @@ import java.net.URL;
 @NoArgsConstructor
 public class Event {
 
-    @JsonProperty
     String name;
 
-    @JsonProperty
     URL crest;
+
 }

@@ -3,25 +3,27 @@ package com.valoler.telegram_hltv_bot.botapi;
 import com.valoler.telegram_hltv_bot.botapi.keyboards.TelegramHLTVBotInlineKeyboard;
 import com.valoler.telegram_hltv_bot.botapi.keyboards.TelegramHLTVBotReplyKeyboard;
 import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.CallbackQueryParser;
-import com.valoler.telegram_hltv_bot.service.HltvApiMatchesService;
-import com.valoler.telegram_hltv_bot.service.HltvApiNewsService;
-import com.valoler.telegram_hltv_bot.service.HltvApiResultsService;
-import com.valoler.telegram_hltv_bot.service.HltvApiStatsbyIdService;
+import com.valoler.telegram_hltv_bot.model.HltvApiNews;
+import com.valoler.telegram_hltv_bot.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.send.SendMediaGroup;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Component
@@ -29,6 +31,7 @@ import java.util.Objects;
 public class TelegramHLTVBot extends TelegramWebhookBot {
 
     private final CallbackQueryParser callbackQueryParser;
+    private final LocaleMessageService localeMessageService;
     private final TelegramHLTVBotInlineKeyboard telegramHLTVBotInlineKeyboard;
     private final TelegramHLTVBotReplyKeyboard telegramHLTVBotReplyKeyboard;
 
@@ -90,23 +93,29 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                     LocalDateTime.ofEpochSecond(message.getDate(), 0, ZoneOffset.ofHours(3)).format(formatter),
                     message.getText());
 
-            switch (Objects.requireNonNull(update.getMessage()).getText()){
+            switch (Objects.requireNonNull(update.getMessage()).getText()) {
                 case ("KBD"):
                     log.debug("Inline keyboard was asked.");
                     return telegramHLTVBotInlineKeyboard.sendInlineKeyBoardMessage(message.getChatId().toString());
-                    //break;
+                //break;
                 case ("/KBD"):
                     log.debug("Reply keyboard was asked.");
                     return telegramHLTVBotReplyKeyboard.sendReplyKeyBoardMessage(message.getChatId().toString());
-                    //break;
+                //break;
                 case ("News"):
                     log.debug("News are requested.");
-                    hltvApiNewsService.getNews();
-                    //SendMessage sendMessage = new SendMessage();
-                    sendMessage.setChatId(message.getChatId().toString());
-                    sendMessage.setText("News are cooking!");
-                    return sendMessage;
-                    //break;
+
+                    List<HltvApiNews> newsList = hltvApiNewsService.getNews(); // get list of News
+
+                    for (HltvApiNews news : newsList) {
+                        try {
+                            execute(hltvApiNewsService.prepareNewsMessage(message, news));
+                        } catch (TelegramApiException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    break;
                 case ("Results"):
                     log.debug("Results are requested.");
                     hltvApiResultsService.getResults();
@@ -121,7 +130,7 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                     sendMessage.setChatId(message.getChatId().toString());
                     sendMessage.setText("Matches are cooking!");
                     return sendMessage;
-                    //break;
+                //break;
                 case ("Stats"):
                     log.debug("Stats are requested.");
                     hltvApiStatsbyIdService.getStats();
@@ -136,5 +145,4 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
         }
         return null;
     }
-
 }
