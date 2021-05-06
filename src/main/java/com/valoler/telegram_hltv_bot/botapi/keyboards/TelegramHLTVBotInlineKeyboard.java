@@ -27,6 +27,7 @@ public class TelegramHLTVBotInlineKeyboard {
 
 
         button_getNews.setText("News");
+
         button_getNews.setCallbackData("NEWS");
 
         button_getResults.setText("Results");
