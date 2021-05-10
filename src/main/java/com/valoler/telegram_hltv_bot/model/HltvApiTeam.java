@@ -1,18 +1,13 @@
-package com.valoler.telegram_hltv_bot.dto;
+package com.valoler.telegram_hltv_bot.model;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * This class describes DTO object
- * for Team from HLTV API (https://github.com/dajk/hltv-api)
- */
 
-@Builder
 @Getter
 @Setter
-public class HltvApiTeamTo {
+public class HltvApiTeam {
 
     private String name;
 
@@ -22,10 +17,11 @@ public class HltvApiTeamTo {
 
     @Override
     public String toString() {
-        return "HltvApiTeamTo{" +
+        return "HltvApiTeam{" +
                 "name='" + name + '\'' +
                 ", crest='" + crest + '\'' +
                 ", result=" + result +
                 '}';
     }
+
 }

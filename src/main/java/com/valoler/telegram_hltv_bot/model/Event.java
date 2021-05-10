@@ -14,6 +14,6 @@ public class Event {
 
     String name;
 
-    URL crest;
+    String crest;
 
 }

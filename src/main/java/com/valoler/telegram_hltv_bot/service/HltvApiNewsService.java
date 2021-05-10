@@ -54,6 +54,7 @@ public class HltvApiNewsService {
         );
 
         HltvApiNewsTo[] newsTosList = response.getBody();
+
         assert newsTosList != null;
         for(HltvApiNewsTo r : newsTosList){
             log.info(r.toString());

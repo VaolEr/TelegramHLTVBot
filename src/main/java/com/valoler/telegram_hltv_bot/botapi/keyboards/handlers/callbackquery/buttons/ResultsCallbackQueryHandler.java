@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -21,6 +23,11 @@ public class ResultsCallbackQueryHandler implements CallbackQueryHandler {
     public SendMessage handleCallbackQuery(CallbackQuery callbackQuery) {
         final String chatID = callbackQuery.getMessage().getChatId().toString();
         return messageService.getReplyMessage(chatID, "reply.query.RESULTS");
+    }
+
+    @Override
+    public List<SendMessage> handleCallbackQueryMultiAnswer(CallbackQuery callbackQuery) {
+        return null;
     }
 
     @Override
