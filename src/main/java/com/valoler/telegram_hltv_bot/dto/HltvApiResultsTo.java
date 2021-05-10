@@ -1,6 +1,7 @@
 package com.valoler.telegram_hltv_bot.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,24 +9,19 @@ import lombok.Setter;
  * This class describes DTO object
  * for Results from HLTV API (https://github.com/dajk/hltv-api)
  */
-
+@Builder
 @Getter
 @Setter
 public class HltvApiResultsTo {
 
-    String event;
-
-    String maps;
-
-    String time;
-
+    private String event;
+    private String maps;
+    private String time;
     @JsonProperty("team1")
-    HltvApiTeamTo team1;
-
+    private HltvApiTeamTo team1;
     @JsonProperty("team2")
-    HltvApiTeamTo team2;
-
-    String matchId;
+    private HltvApiTeamTo team2;
+    private String matchId;
 
     @Override
     public String toString() {

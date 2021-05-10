@@ -8,5 +8,8 @@ public enum CallbackQueryType {
     NEWS,
     RESULTS,
     MATCHES,
-    STATS;
+    STATS,
+
+    TEAMRESULTS,
+    ;
 }
