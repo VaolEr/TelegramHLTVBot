@@ -11,6 +11,7 @@ import com.valoler.telegram_hltv_bot.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -29,6 +30,7 @@ import java.util.*;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+@PropertySource("classpath:application-botSettings.properties")
 public class TelegramHLTVBot extends TelegramWebhookBot {
 
     private final CallbackQueryParser callbackQueryParser;
