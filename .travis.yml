@@ -3,7 +3,7 @@ jdk:
   - openjdk11
 before_install:
   #- openssl aes-256-cbc -K $encrypted_b112a3c5b732_key -iv $encrypted_b112a3c5b732_iv -in application-botSettings.properties.enc -out src\\main\\resources\\application-botSettings.properties -d
-  - openssl aes-256-cbc -K $encrypted_514ae8e0dace_key -iv $encrypted_514ae8e0dace_iv -in application-botSettings.properties.enc -out /mnt/e/Java\ projects/TelegramHLTVBot/src/main/resources/application-botSettings.properties -d
+  - openssl aes-256-cbc -K $encrypted_514ae8e0dace_key -iv $encrypted_514ae8e0dace_iv -in application-botSettings.properties.enc -out /src/main/resources/application-botSettings.properties -d
 # git strips the wrapper jar file so we have to force its download during the build
 install:
   - mvn -N io.takari:maven:wrapper
