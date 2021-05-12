@@ -9,6 +9,6 @@ install:
   - mvn -N io.takari:maven:wrapper
   - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
-  - mvn spring-boot:run -Dspring.profiles.active=botSettings
-  - ./mvnw clean install
+  #- mvn spring-boot:run -Dspring.profiles.active=botSettings
+  - ./mvnw clean install -Dspring.profiles.active=botSettings
 ##- ./mvnw heroku:deploy jib:build -P deploy-heroku #
