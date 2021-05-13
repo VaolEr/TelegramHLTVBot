@@ -4,7 +4,7 @@ jdk:
 before_install:
 - cd $TRAVIS_BUILD_DIR/src/main/resources
 - echo "$PATH"
-- ll
+- ls
 - openssl aes-256-cbc -K $encrypted_442a81cafda4_key -iv $encrypted_442a81cafda4_iv -in application-botSettings.properties.enc -out application-botSettings.properties -d
 install:
 - mvn -N io.takari:maven:wrapper
