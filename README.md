@@ -1,4 +1,5 @@
 [![Build Status](https://www.travis-ci.com/VaolEr/TelegramHLTVBot.svg?branch=master)](https://www.travis-ci.com/VaolEr/TelegramHLTVBot)
+[![codecov](https://codecov.io/gh/VaolEr/TelegramHLTVBot/branch/master/graph/badge.svg?token=G2R8G1BGIX)](https://codecov.io/gh/VaolEr/TelegramHLTVBot)
 ## Telegram HLTV Bot
 
 This project is based on [HLTV API](https://github.com/dajk/hltv-api)  - An unofficial JSON api for popular CS:GO website hltv.org.
