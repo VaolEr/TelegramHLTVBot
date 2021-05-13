@@ -1,10 +1,12 @@
 language: java
 jdk:
-  - openjdk11
-# git strips the wrapper jar file so we have to force its download during the build
+- openjdk11
+before_install:
+- cd $TRAVIS_BUILD_DIR/src/main/resources # Change directory to encrypted file
+- openssl aes-256-cbc -K $encrypted_442a81cafda4_key -iv $encrypted_442a81cafda4_iv -in application-botSettings.properties.enc -out application-botSettings.properties -d # Decrypt file
+- cd $TRAVIS_BUILD_DIR  # Go back to project directory
 install:
-  - mvn -N io.takari:maven:wrapper
-  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+- mvn -N io.takari:maven:wrapper
+- "./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
 script:
-- ./mvnw clean install
-#- ./mvnw heroku:deploy jib:build -P deploy-heroku
+- "./mvnw clean install"
