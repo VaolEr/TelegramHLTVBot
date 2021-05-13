@@ -7,9 +7,9 @@ before_install:
 - cd $TRAVIS_BUILD_DIR  # Go back to project directory
 install:
 - mvn -N io.takari:maven:wrapper
-- "./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V"
+- ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script:
   - mvn clean package
   after_success:
     - bash <(curl -s https://codecov.io/bash)
-- "./mvnw clean install"
+- ./mvnw clean install
