@@ -1,30 +1,24 @@
 package com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.buttons;
 
 import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.CallbackQueryType;
-import com.valoler.telegram_hltv_bot.service.ReplyMessageService;
 import org.apache.maven.surefire.shared.lang3.NotImplementedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-public class NewsCallbackQueryHandlerTest extends AbstractCallbackQueryHandlerTest {
+public class StatsByMatchIdCallbackQueryHandlerTest extends AbstractCallbackQueryHandlerTest{
 
-
-    NewsCallbackQueryHandler newsCallbackQueryHandler;
+    StatsByMatchIdCallbackQueryHandler callbackQueryHandler;
 
     @Override
     @BeforeEach
     void setUp(){
-        newsCallbackQueryHandler = new NewsCallbackQueryHandler(messageService);
+        callbackQueryHandler = new StatsByMatchIdCallbackQueryHandler(messageService);
         super.setUp();
     }
 
@@ -37,21 +31,21 @@ public class NewsCallbackQueryHandlerTest extends AbstractCallbackQueryHandlerTe
                 .text("query.test")
                 .build());
 
-        newsCallbackQueryHandler.handleCallbackQuery(callbackQuery);
+        callbackQueryHandler.handleCallbackQuery(callbackQuery);
 
         //then
-        assertThat(newsCallbackQueryHandler.handleCallbackQuery(callbackQuery)).isNotNull();
+        assertThat(callbackQueryHandler.handleCallbackQuery(callbackQuery)).isNotNull();
         assertEquals(SendMessage.builder()
                 .chatId(testChatID)
                 .text("query.test")
-                .build(), newsCallbackQueryHandler.handleCallbackQuery(callbackQuery));
+                .build(), callbackQueryHandler.handleCallbackQuery(callbackQuery));
     }
 
     @Override
     @Test
     public void handleCallbackQueryMultiAnswerTest(){
         try {
-            newsCallbackQueryHandler.handleCallbackQueryMultiAnswer(callbackQuery);
+            callbackQueryHandler.handleCallbackQueryMultiAnswer(callbackQuery);
         } catch (NotImplementedException e){
             assertEquals(NotImplementedException.class, e.getClass());
         }
@@ -60,6 +54,6 @@ public class NewsCallbackQueryHandlerTest extends AbstractCallbackQueryHandlerTe
     @Override
     @Test
     public void getHandlerQueryTypeTest(){
-        assertEquals(newsCallbackQueryHandler.getHandlerQueryType(), CallbackQueryType.NEWS);
+        assertEquals(callbackQueryHandler.getHandlerQueryType(), CallbackQueryType.STATS);
     }
 }

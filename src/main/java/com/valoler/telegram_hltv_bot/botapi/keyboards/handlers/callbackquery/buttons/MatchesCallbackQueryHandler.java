@@ -5,6 +5,7 @@ import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.Cal
 import com.valoler.telegram_hltv_bot.service.ReplyMessageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.maven.surefire.shared.lang3.NotImplementedException;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -27,7 +28,7 @@ public class MatchesCallbackQueryHandler implements CallbackQueryHandler {
 
     @Override
     public List<SendMessage> handleCallbackQueryMultiAnswer(CallbackQuery callbackQuery) {
-        return null;
+        throw new NotImplementedException("handleCallbackQueryMultiAnswer not implemented in " + MatchesCallbackQueryHandler.class);
     }
 
     @Override

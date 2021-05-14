@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class CallbackQueryParser {
+
     private final ReplyMessageService messagesService;
     private final List<CallbackQueryHandler> callbackQueryHandlers;
 
