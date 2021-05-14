@@ -1,5 +1,6 @@
 package com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.buttons;
 
+import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.BotCallbackQueryType;
 import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.CallbackQueryHandler;
 import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.CallbackQueryType;
 import com.valoler.telegram_hltv_bot.service.ReplyMessageService;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NewsCallbackQueryHandler implements CallbackQueryHandler {
 
-    private static final CallbackQueryType HANDLER_QUERY_TYPE = CallbackQueryType.NEWS;
+    private static final CallbackQueryType HANDLER_QUERY_TYPE = BotCallbackQueryType.NEWS;
     private final ReplyMessageService messageService;
 
     @Override

@@ -1,6 +1,6 @@
 package com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.buttons;
 
-import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.CallbackQueryType;
+import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.BotCallbackQueryType;
 import org.apache.maven.surefire.shared.lang3.NotImplementedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,6 +54,6 @@ public class StatsByMatchIdCallbackQueryHandlerTest extends AbstractCallbackQuer
     @Override
     @Test
     public void getHandlerQueryTypeTest(){
-        assertEquals(callbackQueryHandler.getHandlerQueryType(), CallbackQueryType.STATS);
+        assertEquals(callbackQueryHandler.getHandlerQueryType(), BotCallbackQueryType.STATS);
     }
 }

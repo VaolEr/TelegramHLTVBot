@@ -1,6 +1,6 @@
 package com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.buttons;
 
-import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.CallbackQueryType;
+import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.BotCallbackQueryType;
 import com.valoler.telegram_hltv_bot.model.HltvApiResults;
 import com.valoler.telegram_hltv_bot.model.HltvApiTeam;
 import com.valoler.telegram_hltv_bot.service.HltvApiResultsService;
@@ -79,7 +79,7 @@ public class TeamResultsCallbackQueryHandlerTest extends AbstractCallbackQueryHa
     @Override
     @Test
     public void getHandlerQueryTypeTest(){
-        assertEquals(callbackQueryHandler.getHandlerQueryType(), CallbackQueryType.TEAMRESULTS);
+        assertEquals(callbackQueryHandler.getHandlerQueryType(), BotCallbackQueryType.TEAMRESULTS);
     }
 
 }

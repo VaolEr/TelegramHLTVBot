@@ -1,15 +1,10 @@
 package com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.buttons;
 
-import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.CallbackQueryType;
-import com.valoler.telegram_hltv_bot.service.ReplyMessageService;
+import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.BotCallbackQueryType;
 import org.apache.maven.surefire.shared.lang3.NotImplementedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -60,6 +55,6 @@ public class NewsCallbackQueryHandlerTest extends AbstractCallbackQueryHandlerTe
     @Override
     @Test
     public void getHandlerQueryTypeTest(){
-        assertEquals(newsCallbackQueryHandler.getHandlerQueryType(), CallbackQueryType.NEWS);
+        assertEquals(newsCallbackQueryHandler.getHandlerQueryType(), BotCallbackQueryType.NEWS);
     }
 }

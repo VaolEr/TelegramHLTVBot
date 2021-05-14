@@ -8,7 +8,6 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Parse the Callback query from telegram bot keyboard
@@ -22,7 +21,7 @@ public class CallbackQueryParser {
 
     public SendMessage processCallbackQuery(CallbackQuery usersQuery) {
 
-        CallbackQueryType usersQueryType = CallbackQueryType.valueOf(usersQuery.getData().split("\\|")[0]);
+        CallbackQueryType usersQueryType = BotCallbackQueryType.valueOf(usersQuery.getData().split("\\|")[0]);
 
         Optional<CallbackQueryHandler> queryHandler = callbackQueryHandlers.stream().
                 filter(callbackQuery -> callbackQuery.getHandlerQueryType().equals(usersQueryType)).findFirst();
@@ -32,7 +31,7 @@ public class CallbackQueryParser {
     }
 
     public List<SendMessage> processCallbackQueryMultiAnswer(CallbackQuery usersQuery){
-        CallbackQueryType usersQueryType = CallbackQueryType.valueOf(usersQuery.getData().split("_")[0]);
+        CallbackQueryType usersQueryType = BotCallbackQueryType.valueOf(usersQuery.getData().split("_")[0]);
 
         Optional<CallbackQueryHandler> queryHandler = callbackQueryHandlers.stream().
                 filter(callbackQuery -> callbackQuery.getHandlerQueryType().equals(usersQueryType)).findFirst();
