@@ -7,7 +7,7 @@ This project is based on [HLTV API](https://github.com/dajk/hltv-api)  - An unof
 
 As for me - it is a pet project for practice Spring, Json, communication with other APIs, Telegram Bot practice and improving my skills in Java.
 
-###What bot can do?
+### What bot can do?
 1. `News` - displays summary of news from hltv.org.\
    Every message with news also have inline button which have link to hltv.org with this news.
    
@@ -18,7 +18,7 @@ As for me - it is a pet project for practice Spring, Json, communication with ot
        Every message with result also have inline button which have link to hltv.org with game results.
 
 
-###For successful start bot You need to create `application-botSettings.properties` with following strings:
+### For successful start bot You need to create `application-botSettings.properties` with following strings:
 
 | Filed Name | Description |
 | :---: | :---: |
