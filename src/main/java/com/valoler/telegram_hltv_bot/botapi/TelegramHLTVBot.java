@@ -75,7 +75,14 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                     update.getCallbackQuery().getData());
 
             String callbackQueryType = update.getCallbackQuery().getData().split("_")[0];
-            String callbackTeamName = update.getCallbackQuery().getData().split("_")[1];
+            //TODO add check for single word callback_queries!
+            String callbackTeamName;
+            try {
+                callbackTeamName = update.getCallbackQuery().getData().split("_")[1];
+            } catch (Exception e){
+                log.info(e.getMessage());
+                callbackTeamName = "";
+            }
 
             switch (callbackQueryType) {
                 case ("TEAMRESULTS"):

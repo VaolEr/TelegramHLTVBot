@@ -7,12 +7,9 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
-public class TelegramHLTVBotInlineKeyboard {
+public class TelegramHLTVBotInlineKeyboard extends AbstractInlineKeyboard {
 
     private final LocaleMessageService localeMessageService;
 
@@ -25,9 +22,7 @@ public class TelegramHLTVBotInlineKeyboard {
         InlineKeyboardButton button_getMatches = new InlineKeyboardButton();
         InlineKeyboardButton button_getStatsByMatchId = new InlineKeyboardButton();
 
-
         button_getNews.setText("News");
-
         button_getNews.setCallbackData("NEWS");
 
         button_getResults.setText("Results");
@@ -36,22 +31,13 @@ public class TelegramHLTVBotInlineKeyboard {
         button_getMatches.setText("Matches");
         button_getMatches.setCallbackData("MATCHES");
 
-        button_getStatsByMatchId.setText("Stats (by match id)");
+        button_getStatsByMatchId.setText("Stats");
         button_getStatsByMatchId.setCallbackData("STATS");
 
-        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-        keyboardButtonsRow1.add(button_getNews);
-        keyboardButtonsRow1.add(button_getResults);
-
-        List<InlineKeyboardButton> keyboardButtonsRow2 = new ArrayList<>();
-        keyboardButtonsRow2.add(button_getMatches);
-        keyboardButtonsRow2.add(button_getStatsByMatchId);
-
-        List<List<InlineKeyboardButton>> rowsList = new ArrayList<>();
-        rowsList.add(keyboardButtonsRow1);
-        rowsList.add(keyboardButtonsRow2);
-
-        inlineKeyboardMarkup.setKeyboard(rowsList);
+        inlineKeyboardMarkup.setKeyboard(getInlineKeyboardAsRowsList(
+                getInlineButtonsRow(button_getNews, button_getResults),
+                getInlineButtonsRow(button_getMatches, button_getStatsByMatchId)
+        ));
 
         SendMessage inlineKeyboardMessage = new SendMessage();
         inlineKeyboardMessage.setChatId(chatId);
