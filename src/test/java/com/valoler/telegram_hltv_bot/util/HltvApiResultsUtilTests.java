@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class HltvApiResultsUtilTests {
 
-    private static final String TEST_EVENT_NAME = "TestEventName";
-    private static final String TEST_MAPS = "TestMaps";
-    private static final String TEST_TIME = "TestTime";
-    private static final String TEST_MATCHID = "TestMatchId";
+    public static final String TEST_EVENT_NAME = "TestEventName";
+    public static final String TEST_MAPS = "TestMaps";
+    public static final String TEST_TIME = "TestTime";
+    public static final String TEST_MATCHID = "TestMatchId";
 
     HltvApiResults testResults;
     HltvApiResultsTo testResultsTo;
