@@ -12,6 +12,7 @@ public enum BotCallbackQueryType implements CallbackQueryType {
 
     TEAMRESULTS,
 
-    TEST
+    IMPLEMENTED$TEST,
+    NOT$IMPLEMENTED$
     ;
 }
