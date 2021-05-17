@@ -110,7 +110,6 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
-    @Disabled
     protected void onWebhookUpdateReceivedTest(){
 
         callbackQuery.setData("IMPLEMENTED$TEST");
@@ -127,6 +126,7 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
+    @Disabled
     protected void onWebhookUpdateReceivedTest2() throws TelegramApiException {
 
         callbackQuery.setData("TEAMRESULTS_IMPLEMENTED$TEST");
