@@ -16,9 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.User;
+import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.Collections;
@@ -68,10 +66,17 @@ public class TelegramHLTVBotTest {
     private String botToken;
     @Value("${api.bots.webhookPaths.telegramHLTVBotPath}")
     private String botPath;
+    @Value("${app.sendMessage.empty}")
+    private String emptySendMessageTextString;
+    @Value("${app.sendMessage.NoResultsForTeam}")
+    private String noResultsForTeamSendMessageText;
+
 
     private Update update;
     private CallbackQuery callbackQuery;
     private User user;
+    private Message message;
+    private Chat chat;
 
     @BeforeEach
     protected void setUp(){
@@ -87,9 +92,21 @@ public class TelegramHLTVBotTest {
         update = new Update();
             callbackQuery = new CallbackQuery();
                 user = new User();
-                user.setUserName("Test USER");
+                user.setId(123456L);
+                user.setFirstName("TestUserFirstName");
+                user.setIsBot(false);
+                user.setUserName("TestUSER");
             callbackQuery.setFrom(user);
+            message = new Message();
+            message.setMessageId(123);
+            message.setText("MessageTestText");
+            message.setDate(0);
+                chat = new Chat();
+                chat.setId(Long.parseLong(testChatID));
+            message.setChat(chat);
+            message.setFrom(user);
         update.setCallbackQuery(callbackQuery);
+        update.setMessage(message);
     }
 
 
@@ -109,7 +126,7 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
-    protected void onWebhookUpdateReceivedTest(){
+    protected void onWebhookUpdateReceivedTest_defaultSwitchState(){
 
         callbackQuery.setData("IMPLEMENTED$TEST");
 
@@ -122,6 +139,23 @@ public class TelegramHLTVBotTest {
                 .chatId(testChatID)
                 .text(TEST_REPLY_MESSAGE)
                 .build(), telegramHLTVBot.onWebhookUpdateReceived(update));
+    }
+    //
+
+    @Test
+    protected void onWebhookUpdateReceivedTest_appSendMessageEmpty(){
+
+        callbackQuery.setData("TEAMRESULTS_IMPLEMENTED$TEST");
+
+        when(callbackQueryParser.processCallbackQueryMultiAnswer(any())).thenReturn(Collections.singletonList(SendMessage.builder()
+                .chatId(testChatID)
+                .text(emptySendMessageTextString)
+                .build()));
+
+        assertEquals(SendMessage.builder()
+                .chatId(testChatID)
+                .text(noResultsForTeamSendMessageText)
+                .build(), testTelegramHLTVBot.onWebhookUpdateReceived(update));
     }
 
     @Test
@@ -139,8 +173,8 @@ public class TelegramHLTVBotTest {
 //        assertEquals(Collections.singletonList(SendMessage.builder()
 //                .chatId(testChatID)
 //                .text(TEST_REPLY_MESSAGE)
-//                .build()), telegramHLTVBot.onWebhookUpdateReceived(update));
+//                .build()), testTelegramHLTVBot.onWebhookUpdateReceived(update));
         //TODO rewrite this test because it is not correct
-        assertThrows(AssertionError.class, ()-> telegramHLTVBot.onWebhookUpdateReceived(update));
+        assertThrows(AssertionError.class, ()-> testTelegramHLTVBot.onWebhookUpdateReceived(update));
     }
 }

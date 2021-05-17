@@ -48,9 +48,14 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
     @Value("${app.bots.tokens.telegramHLTVBotToken}")
     private String botToken;
 
-
     @Value("${api.bots.webhookPaths.telegramHLTVBotPath}")
     private String botPath;
+
+    @Value("${app.sendMessage.empty}")
+    private String emptySendMessageText;
+
+    @Value("${app.sendMessage.NoResultsForTeam}")
+    private String noResultsForTeamSendMessageText;
 
     @Override
     public String getBotUsername() {
@@ -70,6 +75,8 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
 
+        Message message = update.getMessage();
+
         if (update.hasCallbackQuery()) {
             log.info("New callbackQuery from User: {} with data: {}", update.getCallbackQuery().getFrom().getUserName(),
                     update.getCallbackQuery().getData());
@@ -88,14 +95,25 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                 case ("TEAMRESULTS"):
                     log.info("{} Results are requested.", callbackTeamName);
                     List<SendMessage> messages = callbackQueryParser.processCallbackQueryMultiAnswer(update.getCallbackQuery());
+
+                    boolean allMessagesAreEmpty = true;
+
                     for (SendMessage sendMessage : messages) {
                         try {
-                            if(!sendMessage.getText().equals("app.sendMessage.empty")) {
+                            if(!sendMessage.getText().equals(emptySendMessageText)) {
                                 execute(sendMessage);
+                                allMessagesAreEmpty = false;
                             }
                         } catch (TelegramApiException | NullPointerException e) {
                             log.info(e.fillInStackTrace().toString());
                         }
+                    }
+
+                    if(allMessagesAreEmpty){
+                        return SendMessage.builder()
+                                .chatId(message.getChatId().toString())
+                                .text(noResultsForTeamSendMessageText)
+                                .build();
                     }
                     break;
                 default:
@@ -103,19 +121,34 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
             }
         }
 
-        Message message = update.getMessage();
+        message = update.getMessage();
 
         SendMessage sendMessage = new SendMessage();
 
         if (message != null && message.hasText()) {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMMM-d HH:mm:ss", Locale.ENGLISH);
-            log.info("New message from User: {}, isBot: {}, chatId: {}, date: {}, with text: {}",
-                    message.getFrom().getUserName(),
-                    message.getFrom().getIsBot(),
-                    message.getChatId(),
-                    LocalDateTime.ofEpochSecond(message.getDate(), 0, ZoneOffset.ofHours(3)).format(formatter),
-                    message.getText());
+
+            String userName;
+            boolean isBot;
+            Long chatId;
+            String messageDateTime;
+            String messageText;
+
+            userName = message.getFrom().getUserName();
+            isBot = message.getFrom().getIsBot();
+            chatId = message.getChatId();
+            messageDateTime = LocalDateTime.ofEpochSecond(message.getDate(), 0, ZoneOffset.ofHours(3)).format(formatter);
+            messageText = message.getText();
+
+
+                log.info("New message from User: {}, isBot: {}, chatId: {}, date: {}, with text: {}",
+                        userName,
+                        isBot,
+                        chatId,
+                        messageDateTime,
+                        messageText);
+
 
             switch (Objects.requireNonNull(update.getMessage()).getText()) {
                 case ("KBD"):
@@ -161,21 +194,23 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                 case ("Matches"):
                     log.debug("Matches are requested.");
                     hltvApiMatchesService.getMatches();
-                    sendMessage.setChatId(message.getChatId().toString());
+                    sendMessage.setChatId(chatId.toString());
                     sendMessage.setText("Matches are cooking!");
                     return sendMessage;
                 //break;
                 case ("Stats"):
                     log.debug("Stats are requested.");
                     hltvApiStatsbyIdService.getStats();
-                    sendMessage.setChatId(message.getChatId().toString());
+                    sendMessage.setChatId(chatId.toString());
                     sendMessage.setText("For get statistic type '/getStats+/matches/matchId/matchFullName'");
                     return sendMessage;
-                default:
-                    sendMessage.setChatId(message.getChatId().toString());
-                    sendMessage.setText("Well, all information looks like noise until you break the code.");
-                    return sendMessage;
+//                default:
+//                    sendMessage.setChatId(chatId.toString());
+//                    sendMessage.setText("Well, all information looks like noise until you break the code.");
+//                    return sendMessage;
             }
+        } else {
+            log.info("Message is Null!");
         }
         assert message != null;
         return SendMessage.builder()
