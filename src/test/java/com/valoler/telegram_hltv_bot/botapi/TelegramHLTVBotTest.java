@@ -31,7 +31,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@Disabled
 public class TelegramHLTVBotTest {
 
     @MockBean
@@ -110,7 +109,6 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
-    @Disabled
     protected void onWebhookUpdateReceivedTest(){
 
         callbackQuery.setData("IMPLEMENTED$TEST");
@@ -127,7 +125,6 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
-    @Disabled
     protected void onWebhookUpdateReceivedTest2() throws TelegramApiException {
 
         callbackQuery.setData("TEAMRESULTS_IMPLEMENTED$TEST");

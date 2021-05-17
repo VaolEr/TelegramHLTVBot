@@ -2,6 +2,7 @@ package com.valoler.telegram_hltv_bot.controller;
 
 import com.valoler.telegram_hltv_bot.botapi.TelegramHLTVBotTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -75,6 +76,7 @@ public class BotWebHookControllerTest {
     }
 
     @Test
+    @Disabled
     public void onUpdateReceivedTest() throws Exception{
 
         //TODO write correct test. Read more info for it.
