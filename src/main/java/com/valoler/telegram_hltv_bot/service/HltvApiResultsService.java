@@ -36,6 +36,9 @@ public class HltvApiResultsService {
     @Value("${app.hltv.api.results}")
     private String API_LINK_URL;
 
+    @Value("${app.sendMessage.empty}")
+    private String emptySendMessageText;
+
     public @ResponseBody
     List<HltvApiResults> getResults() {
         HttpHeaders headers = new HttpHeaders();
@@ -167,7 +170,7 @@ public class HltvApiResultsService {
                 sendMessage.setText(String.valueOf(messageText));
 
             } else {
-                sendMessage.setText("app.sendMessage.empty");
+                sendMessage.setText(emptySendMessageText);
             }
             return sendMessage;
         }
