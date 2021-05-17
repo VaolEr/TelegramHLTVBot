@@ -33,7 +33,7 @@ public class CallbackQueryParser {
             usersQueryType = BotCallbackQueryType.valueOf(usersQuery.getData().split("\\|")[0]);
         } catch (IllegalArgumentException e){
             log.info(e.getMessage());
-            usersQueryType = BotCallbackQueryType.valueOf("NOT_IMPLEMENTED_TEST");
+            usersQueryType = BotCallbackQueryType.valueOf("NOT$IMPLEMENTED$");
         }
 
         CallbackQueryType finalUsersQueryType = usersQueryType;

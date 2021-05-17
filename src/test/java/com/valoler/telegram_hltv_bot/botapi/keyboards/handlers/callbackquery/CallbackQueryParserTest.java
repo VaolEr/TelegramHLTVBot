@@ -71,7 +71,7 @@ public class CallbackQueryParserTest {
 
     @Test
     public void processCallbackQueryNotFoundTest(){
-        callbackQuery.setData("NOT$IMPLEMENTED$");
+        callbackQuery.setData("NOT_CORRECT_QUERY_TYPE");
 
         when(messageService.getWarningReplyMessage(anyString(), anyString())).thenReturn(SendMessage.builder()
                 .chatId(testChatID)
@@ -96,7 +96,7 @@ public class CallbackQueryParserTest {
 
     @Test
     public void processCallbackQueryMultiAnswerNotFoundTest(){
-        callbackQuery.setData("NOT$IMPLEMENTED$");
+        callbackQuery.setData("NOT_CORRECT_QUERY_TYPE");
         when(messageService.getWarningReplyMessage(anyString(), anyString())).thenReturn(SendMessage.builder()
                 .chatId(testChatID)
                 .text("reply.query.NOT_FOUND")

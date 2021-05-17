@@ -17,10 +17,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @RequestMapping(value = "${app.endpoints.base_path}" + "${app.endpoints.telegram-bots.base_url}",
         produces = MediaType.APPLICATION_JSON_VALUE)
 public class BotWebHookController {
+
     private final TelegramHLTVBot telegramHLTVBot;
 
     @PostMapping(path = "/telegram-HLTV-bot")
-    public BotApiMethod<?> onUpdateReceivedYookassaPaymentBot(@RequestBody Update update) {
+    public BotApiMethod<?> onUpdateReceived(@RequestBody Update update) {
         return telegramHLTVBot.onWebhookUpdateReceived(update);
     }
 }

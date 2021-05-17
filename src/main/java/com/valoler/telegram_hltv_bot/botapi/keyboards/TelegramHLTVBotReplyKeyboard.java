@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class TelegramHLTVBotReplyKeyboard extends AbstractKeyboard{
+public class TelegramHLTVBotReplyKeyboard extends AbstractReplyKeyboard{
 
     private final LocaleMessageService localeMessageService;
 
@@ -72,6 +72,7 @@ public class TelegramHLTVBotReplyKeyboard extends AbstractKeyboard{
 
         SendMessage replyKeyboardMessage = new SendMessage();
         replyKeyboardMessage.setChatId(chatId);
+        replyKeyboardMessage.setText(localeMessageService.getMessage("keyboard.greeting_message"));
         replyKeyboardMessage.setReplyMarkup(replyKeyboardMarkup);
         log.debug("Reply keyboard was set.");
         return replyKeyboardMessage;
