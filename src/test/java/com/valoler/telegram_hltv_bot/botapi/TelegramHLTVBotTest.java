@@ -159,6 +159,7 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
+    @Disabled
     protected void onWebhookUpdateReceivedTest2() throws TelegramApiException {
 
         callbackQuery.setData("TEAMRESULTS_IMPLEMENTED$TEST");
@@ -175,6 +176,6 @@ public class TelegramHLTVBotTest {
 //                .text(TEST_REPLY_MESSAGE)
 //                .build()), testTelegramHLTVBot.onWebhookUpdateReceived(update));
         //TODO rewrite this test because it is not correct
-        assertThrows(AssertionError.class, ()-> testTelegramHLTVBot.onWebhookUpdateReceived(update));
+        assertThrows(TelegramApiException.class, ()-> testTelegramHLTVBot.onWebhookUpdateReceived(update));
     }
 }
