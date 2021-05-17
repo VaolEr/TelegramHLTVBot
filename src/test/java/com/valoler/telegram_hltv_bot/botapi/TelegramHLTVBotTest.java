@@ -4,6 +4,7 @@ import com.valoler.telegram_hltv_bot.botapi.keyboards.TelegramHLTVBotInlineKeybo
 import com.valoler.telegram_hltv_bot.botapi.keyboards.TelegramHLTVBotReplyKeyboard;
 import com.valoler.telegram_hltv_bot.botapi.keyboards.TelegramHLTVBotTeamsInlineKeyboard;
 import com.valoler.telegram_hltv_bot.botapi.keyboards.handlers.callbackquery.CallbackQueryParser;
+import com.valoler.telegram_hltv_bot.model.HltvApiTeams;
 import com.valoler.telegram_hltv_bot.service.HltvApiMatchesService;
 import com.valoler.telegram_hltv_bot.service.HltvApiNewsService;
 import com.valoler.telegram_hltv_bot.service.HltvApiResultsService;
@@ -97,16 +98,16 @@ public class TelegramHLTVBotTest {
                 user.setIsBot(false);
                 user.setUserName("TestUSER");
             callbackQuery.setFrom(user);
-            message = new Message();
-            message.setMessageId(123);
-            message.setText("MessageTestText");
-            message.setDate(0);
-                chat = new Chat();
-                chat.setId(Long.parseLong(testChatID));
-            message.setChat(chat);
-            message.setFrom(user);
+                message = new Message();
+                message.setMessageId(123);
+                message.setText("MessageTestText");
+                message.setDate(0);
+                    chat = new Chat();
+                    chat.setId(Long.parseLong(testChatID));
+                message.setChat(chat);
+                message.setFrom(user);
+            callbackQuery.setMessage(message);
         update.setCallbackQuery(callbackQuery);
-        update.setMessage(message);
     }
 
 
@@ -129,6 +130,7 @@ public class TelegramHLTVBotTest {
     protected void onWebhookUpdateReceivedTest_defaultSwitchState(){
 
         callbackQuery.setData("IMPLEMENTED$TEST");
+        update.setMessage(message);
 
         when(callbackQueryParser.processCallbackQuery(any())).thenReturn(SendMessage.builder()
                 .chatId(testChatID)
@@ -137,7 +139,7 @@ public class TelegramHLTVBotTest {
 
         assertEquals(SendMessage.builder()
                 .chatId(testChatID)
-                .text(TEST_REPLY_MESSAGE)
+                .text("Well, all information looks like noise until you break the code.")
                 .build(), telegramHLTVBot.onWebhookUpdateReceived(update));
     }
     //
@@ -160,7 +162,7 @@ public class TelegramHLTVBotTest {
 
     @Test
     @Disabled
-    protected void onWebhookUpdateReceivedTest2() throws TelegramApiException {
+    protected void onWebhookUpdateReceivedTest_MultipleResults() throws TelegramApiException {
 
         callbackQuery.setData("TEAMRESULTS_IMPLEMENTED$TEST");
 
@@ -171,11 +173,11 @@ public class TelegramHLTVBotTest {
 
         //when(telegramHLTVBot.execute((SendMessage) any())).thenReturn();
 
-//        assertEquals(Collections.singletonList(SendMessage.builder()
-//                .chatId(testChatID)
-//                .text(TEST_REPLY_MESSAGE)
-//                .build()), testTelegramHLTVBot.onWebhookUpdateReceived(update));
+        assertEquals(Collections.singletonList(SendMessage.builder()
+                .chatId(testChatID)
+                .text("This is all results what I found for team " + HltvApiTeams.valueOf("NAVI").getHltvApiName() + " !")
+                .build()), testTelegramHLTVBot.onWebhookUpdateReceived(update));
         //TODO rewrite this test because it is not correct
-        assertThrows(TelegramApiException.class, ()-> testTelegramHLTVBot.onWebhookUpdateReceived(update));
+       // assertThrows(TelegramApiException.class, ()-> testTelegramHLTVBot.onWebhookUpdateReceived(update));
     }
 }
