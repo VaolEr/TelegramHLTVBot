@@ -177,6 +177,10 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                     return sendMessage;
             }
         }
-        return null;
+        assert message != null;
+        return SendMessage.builder()
+                .chatId(message.getChatId().toString())
+                .text("Something goes wrong! We will fix it Soon.")
+                .build();
     }
 }

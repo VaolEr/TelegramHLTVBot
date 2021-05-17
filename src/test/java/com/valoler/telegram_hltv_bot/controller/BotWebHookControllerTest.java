@@ -1,6 +1,6 @@
 package com.valoler.telegram_hltv_bot.controller;
 
-import com.valoler.telegram_hltv_bot.botapi.TelegramHLTVBot;
+import com.valoler.telegram_hltv_bot.botapi.TelegramHLTVBotTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ public class BotWebHookControllerTest {
     protected MockMvc mockMvc;
 
 
-    TelegramHLTVBot telegramHLTVBot = Mockito.mock(TelegramHLTVBot.class);
+    TelegramHLTVBotTest telegramHLTVBot = Mockito.mock(TelegramHLTVBotTest.class);
 
     protected HttpHeaders headers;
 
