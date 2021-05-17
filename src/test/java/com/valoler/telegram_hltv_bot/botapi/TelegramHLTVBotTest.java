@@ -20,7 +20,6 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 import java.util.Collections;
 
@@ -32,6 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@Disabled
 public class TelegramHLTVBotTest {
 
     @MockBean
@@ -110,6 +110,7 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
+    @Disabled
     protected void onWebhookUpdateReceivedTest(){
 
         callbackQuery.setData("IMPLEMENTED$TEST");
