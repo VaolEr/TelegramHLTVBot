@@ -9,6 +9,7 @@ import com.valoler.telegram_hltv_bot.service.HltvApiNewsService;
 import com.valoler.telegram_hltv_bot.service.HltvApiResultsService;
 import com.valoler.telegram_hltv_bot.service.HltvApiStatsbyIdService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -109,6 +110,7 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
+    @Disabled
     protected void onWebhookUpdateReceivedTest(){
 
         callbackQuery.setData("IMPLEMENTED$TEST");
