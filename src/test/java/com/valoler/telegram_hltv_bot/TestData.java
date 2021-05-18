@@ -1,5 +1,6 @@
 package com.valoler.telegram_hltv_bot;
 
+import com.valoler.telegram_hltv_bot.dto.HltvApiPlayerTo;
 import com.valoler.telegram_hltv_bot.dto.HltvApiTeamTo;
 import com.valoler.telegram_hltv_bot.model.Event;
 import com.valoler.telegram_hltv_bot.model.HltvApiNews;
@@ -86,7 +87,18 @@ public class TestData {
     public static final Double TEST_PLAYER_ADR = 157.3;
     public static final Double TEST_PLAYER_KAST = 1.17;
     public static final Double TEST_PLAYER_RATING = (double) (TEST_PLAYER_KILLS / TEST_PLAYER_DEATHS);
-
+    public static final HltvApiPlayerTo TEST_HLTVAPI_PLAYER_TO;
+    static {
+        TEST_HLTVAPI_PLAYER_TO = new HltvApiPlayerTo();
+        TEST_HLTVAPI_PLAYER_TO.setPlayerName(TEST_PLAYER_NAME);
+        TEST_HLTVAPI_PLAYER_TO.setPlayerId(TEST_PLAYER_ID);
+        TEST_HLTVAPI_PLAYER_TO.setKills(TEST_PLAYER_KILLS);
+        TEST_HLTVAPI_PLAYER_TO.setDeaths(TEST_PLAYER_DEATHS);
+        TEST_HLTVAPI_PLAYER_TO.setPlusMinus(TEST_PLAYER_PLUSMINUS);
+        TEST_HLTVAPI_PLAYER_TO.setAdr(TEST_PLAYER_ADR);
+        TEST_HLTVAPI_PLAYER_TO.setKast(TEST_PLAYER_KAST);
+        TEST_HLTVAPI_PLAYER_TO.setRating(TEST_PLAYER_RATING);
+    }
 
     public static final HltvApiResults TEST_HLTVAPI_RESULT = new HltvApiResults();
 
