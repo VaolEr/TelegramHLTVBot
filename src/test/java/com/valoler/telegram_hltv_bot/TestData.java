@@ -1,5 +1,6 @@
 package com.valoler.telegram_hltv_bot;
 
+import com.valoler.telegram_hltv_bot.dto.HltvApiTeamTo;
 import com.valoler.telegram_hltv_bot.model.Event;
 import com.valoler.telegram_hltv_bot.model.HltvApiNews;
 import com.valoler.telegram_hltv_bot.model.HltvApiResults;
@@ -13,19 +14,20 @@ public class TestData {
     public static final String TEST_CHAT_ID = "123456";
 
     // Event test data block
+    public static final String TEST_STRING_EVENT = "Test String Event";
     public static final String TEST_EVENT_NAME = "Test Event Name";
     public static final String TEST_EVENT_CREST = "Test Event Crest";
+    public static final Event TEST_EVENT;
+    static {
+        TEST_EVENT = new Event();
+        TEST_EVENT.setName(TEST_EVENT_NAME);
+        TEST_EVENT.setCrest(TEST_EVENT_CREST);
+    }
 
     // Match test data block
     public static final Integer TEST_MATCH_ID = 778;
     public static final String TEST_MATCH_LINK = "http://test.matchLink.com";
     public static final String TEST_MATCH_TIME = "yyyy-MMMM-d HH:mm:ss";
-    public static final Event TEST_MATCH_EVENT;
-    static {
-        TEST_MATCH_EVENT = new Event();
-        TEST_MATCH_EVENT.setName(TEST_EVENT_NAME);
-        TEST_MATCH_EVENT.setCrest(TEST_EVENT_CREST);
-    }
     public static final Integer TEST_MATCH_STARS = 1;
     public static final String TEST_MATCH_MAPS = "Test match maps";
 
@@ -33,6 +35,28 @@ public class TestData {
     public static final String TEST_TEAM_NAME = "Test Team Name";
     public static final String TEST_TEAM_CREST = "Test Team Crest";
     public static final Integer TEST_TEAM_RESULT = 16;
+    public static final HltvApiTeamTo TEST_TEAM_TO_1;
+    public static final HltvApiTeamTo TEST_TEAM_TO_2;
+    static {
+        TEST_TEAM_TO_1 = HltvApiTeamTo.builder()
+                .name(TEST_TEAM_NAME)
+                .crest(TEST_TEAM_CREST)
+                .result(TEST_TEAM_RESULT)
+                .build();
+        TEST_TEAM_TO_1.setName(TEST_TEAM_NAME);
+        TEST_TEAM_TO_1.setCrest(TEST_TEAM_CREST);
+        TEST_TEAM_TO_1.setResult(TEST_TEAM_RESULT);
+
+        TEST_TEAM_TO_2 = HltvApiTeamTo.builder()
+                .name(TEST_TEAM_NAME)
+                .crest(TEST_TEAM_CREST)
+                .result(TEST_TEAM_RESULT)
+                .build();
+        TEST_TEAM_TO_2.setName(TEST_TEAM_NAME + "2");
+        TEST_TEAM_TO_2.setCrest(TEST_TEAM_CREST + "2");
+        TEST_TEAM_TO_2.setResult(TEST_TEAM_RESULT-5);
+    }
+
 
     // News test data block
     public static final String TEST_NEWS_TITLE = "Test News Title";
