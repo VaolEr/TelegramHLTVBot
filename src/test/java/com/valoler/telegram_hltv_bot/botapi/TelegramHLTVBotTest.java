@@ -360,4 +360,26 @@ public class TelegramHLTVBotTest {
                 .build(), testTelegramHLTVBot.onWebhookUpdateReceived(update));
 
     }
+
+    @Test
+    @DisplayName("Return processCallbackQuery result message")
+    protected void onWebhookUpdateReceivedTest_SingleResult() throws TelegramApiException {
+
+        callbackQuery.setData("NEWS");
+
+        AbsSender absSender = mock(AbsSender.class);
+
+        when(callbackQueryParser.processCallbackQuery(any())).thenReturn(SendMessage.builder()
+                .chatId(TEST_CHAT_ID)
+                .text(TEST_REPLY_MESSAGE)
+                .build());
+
+        when(absSender.execute(any(SendMessage.class))).thenReturn(message);
+
+        assertEquals(SendMessage.builder()
+                .chatId(TEST_CHAT_ID)
+                .text(TEST_REPLY_MESSAGE)
+                .build(), testTelegramHLTVBot.onWebhookUpdateReceived(update));
+
+    }
 }
