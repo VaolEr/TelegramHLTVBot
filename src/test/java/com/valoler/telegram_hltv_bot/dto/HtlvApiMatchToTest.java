@@ -85,4 +85,9 @@ public class HtlvApiMatchToTest {
         assertEquals(teams, hltvApiMatchTo.getTeams());
     }
 
+    @Test
+    @DisplayName("Should return toString value")
+    public void hltvApiMatchTo_toStringTest(){
+        assertEquals(hltvApiMatchTo.toString(), hltvApiMatchTo.toString());
+    }
 }

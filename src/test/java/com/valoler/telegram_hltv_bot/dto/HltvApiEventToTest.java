@@ -12,8 +12,6 @@ public class HltvApiEventToTest {
 
     HltvApiEventTo eventTo;
 
-
-
     @BeforeEach
     protected void setUp(){
         eventTo = new HltvApiEventTo();
@@ -23,13 +21,19 @@ public class HltvApiEventToTest {
 
     @Test
     @DisplayName("Should return correct EventTo name")
-    public void hltvApiEventTo_getName(){
+    public void hltvApiEventTo_getNameTest(){
         assertEquals(TEST_EVENT_NAME, eventTo.getName());
     }
 
     @Test
     @DisplayName("Should return correct EventTo crest")
-    public void hltvApiEventTo_getCrest(){
+    public void hltvApiEventTo_getCrestTest(){
         assertEquals(TEST_EVENT_CREST, eventTo.getCrest());
+    }
+
+    @Test
+    @DisplayName("Should return toString value")
+    public void hltvApiEventTo_toStringTest(){
+        assertEquals(eventTo.toString(), eventTo.toString());
     }
 }
