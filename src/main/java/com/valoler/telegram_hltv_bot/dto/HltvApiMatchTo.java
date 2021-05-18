@@ -9,13 +9,13 @@ import java.util.Arrays;
 @Getter
 @Setter
 public class HltvApiMatchTo {
-    Integer id;
-    String link;
-    String time;
-    Event event;
-    Integer stars;
-    String map;
-    HltvApiTeamTo[] teams;
+    private Integer id;
+    private String link;
+    private String time;
+    private Event event;
+    private Integer stars;
+    private String map;
+    private HltvApiTeamTo[] teams;
 
     @Override
     public String toString() {
