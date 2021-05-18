@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.valoler.telegram_hltv_bot.TestData.TEST_EVENT_NAME;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
@@ -19,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class HltvApiResultsUtilTests {
 
-    public static final String TEST_EVENT_NAME = "TestEventName";
     public static final String TEST_MAPS = "TestMaps";
     public static final String TEST_TIME = "TestTime";
     public static final String TEST_MATCHID = "TestMatchId";

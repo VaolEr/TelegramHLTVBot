@@ -10,6 +10,9 @@ import java.net.URL;
 public class TestData {
 
     public static final String TEST_CHAT_ID = "123456";
+    public static final String TEST_EVENT_NAME = "Test Event Name";
+    public static final String TEST_EVENT_CREST = "Test Event Crest";
+
 
     public static final HltvApiNews TEST_HLTVAPI_NEWS = new HltvApiNews();
 
@@ -31,7 +34,7 @@ public class TestData {
         TEST_HLTVAPI_RESULT.setTeam1(new HltvApiTeam());
         TEST_HLTVAPI_RESULT.setTeam2(new HltvApiTeam());
         TEST_HLTVAPI_RESULT.setTime("yyyy-MMMM-d HH:mm:ss");
-        TEST_HLTVAPI_RESULT.setEvent("Test Event");
+        TEST_HLTVAPI_RESULT.setEvent(TEST_EVENT_NAME);
         TEST_HLTVAPI_RESULT.setMaps("Test Maps");
     }
 

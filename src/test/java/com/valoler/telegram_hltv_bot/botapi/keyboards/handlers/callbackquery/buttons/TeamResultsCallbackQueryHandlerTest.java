@@ -13,6 +13,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.valoler.telegram_hltv_bot.TestData.TEST_EVENT_NAME;
 import static com.valoler.telegram_hltv_bot.util.HltvApiResultsUtilTests.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
