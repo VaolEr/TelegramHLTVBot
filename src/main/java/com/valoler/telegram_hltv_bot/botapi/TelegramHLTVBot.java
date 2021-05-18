@@ -117,8 +117,8 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                     for (SendMessage sendMessage : messages) {
                         try {
                             if (!sendMessage.getText().equals(emptySendMessageText)) {
-                                execute(sendMessage);
                                 allMessagesAreEmpty = false;
+                                execute(sendMessage);
                             }
                         } catch (TelegramApiException | NullPointerException e) {
                             log.info(e.fillInStackTrace().toString());
@@ -215,7 +215,7 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                             .build();
 
                 default:
-                    sendMessage.setChatId(chatId.toString());
+                    sendMessage.setChatId(chatId);
                     sendMessage.setText("I don't know that command. Please, type \"/\" for display commands list.");
                     return sendMessage;
             }

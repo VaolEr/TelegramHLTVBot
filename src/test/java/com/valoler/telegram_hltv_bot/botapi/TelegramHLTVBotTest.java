@@ -16,12 +16,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
+import org.telegram.telegrambots.meta.api.methods.groupadministration.SetChatPhoto;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.List;
@@ -32,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -153,7 +158,6 @@ public class TelegramHLTVBotTest {
                 .text("I don't know that command. Please, type \"/\" for display commands list.")
                 .build(), telegramHLTVBot.onWebhookUpdateReceived(update));
     }
-    //
 
     @Test
     protected void onWebhookUpdateReceivedTest_appSendMessageEmpty(){
@@ -336,23 +340,24 @@ public class TelegramHLTVBotTest {
     }
 
     @Test
-    @Disabled
+    @DisplayName("Return message that al results for team was displayed.")
     protected void onWebhookUpdateReceivedTest_MultipleResults() throws TelegramApiException {
 
-        callbackQuery.setData("TEAMRESULTS_IMPLEMENTED$TEST");
+        callbackQuery.setData("TEAMRESULTS_NAVI");
+
+        AbsSender absSender = mock(AbsSender.class);
 
         when(callbackQueryParser.processCallbackQueryMultiAnswer(any())).thenReturn(Collections.singletonList(SendMessage.builder()
                 .chatId(TEST_CHAT_ID)
                 .text(TEST_REPLY_MESSAGE)
                 .build()));
 
-        //when(telegramHLTVBot.execute((SendMessage) any())).thenReturn();
+        when(absSender.execute(any(SendMessage.class))).thenReturn(message);
 
-        assertEquals(Collections.singletonList(SendMessage.builder()
+        assertEquals(SendMessage.builder()
                 .chatId(TEST_CHAT_ID)
                 .text("This is all results what I found for team " + HltvApiTeams.valueOf("NAVI").getHltvApiName() + " !")
-                .build()), testTelegramHLTVBot.onWebhookUpdateReceived(update));
-        //TODO rewrite this test because it is not correct
-       // assertThrows(TelegramApiException.class, ()-> testTelegramHLTVBot.onWebhookUpdateReceived(update));
+                .build(), testTelegramHLTVBot.onWebhookUpdateReceived(update));
+
     }
 }
