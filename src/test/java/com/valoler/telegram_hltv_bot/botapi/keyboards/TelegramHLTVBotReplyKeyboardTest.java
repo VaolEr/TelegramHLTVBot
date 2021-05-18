@@ -38,15 +38,15 @@ public class TelegramHLTVBotReplyKeyboardTest {
         KeyboardButton button_getResults = new KeyboardButton();
         button_getResults.setText("Results");
 
-        KeyboardButton button_getMatches = new KeyboardButton();
-        button_getMatches.setText("Matches");
+        KeyboardButton button_teams = new KeyboardButton();
+        button_teams.setText("Teams");
 
-        KeyboardButton button_getStatsByMatchId = new KeyboardButton();
-        button_getStatsByMatchId.setText("Stats");
+//        KeyboardButton button_getStatsByMatchId = new KeyboardButton();
+//        button_getStatsByMatchId.setText("Stats");
 
         replyKeyboardMarkup.setKeyboard(telegramHLTVBotReplyKeyboard.getKeyboardAsRowsList(
                 telegramHLTVBotReplyKeyboard.getKeyboardButtonsRow(button_getNews, button_getResults),
-                telegramHLTVBotReplyKeyboard.getKeyboardButtonsRow(button_getMatches, button_getStatsByMatchId)
+                telegramHLTVBotReplyKeyboard.getKeyboardButtonsRow(button_teams)
         ));
     }
 

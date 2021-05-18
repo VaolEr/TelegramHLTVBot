@@ -19,18 +19,6 @@ public class TelegramHLTVBotReplyKeyboard extends AbstractReplyKeyboard{
 
     private final LocaleMessageService localeMessageService;
 
-//    ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-//
-//    List<KeyboardRow> keyboard = new ArrayList<>();
-//
-//    KeyboardRow keyboardRow1 = new KeyboardRow();
-//    KeyboardRow keyboardRow2 = new KeyboardRow();
-//
-//    KeyboardButton button_getNews = new KeyboardButton();
-//    KeyboardButton button_getResults = new KeyboardButton();
-//    KeyboardButton button_getMatches = new KeyboardButton();
-//    KeyboardButton button_getStatsByMatchId = new KeyboardButton();
-
     public SendMessage sendReplyKeyBoardMessage(String chatId){
 
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -39,35 +27,19 @@ public class TelegramHLTVBotReplyKeyboard extends AbstractReplyKeyboard{
         replyKeyboardMarkup.setOneTimeKeyboard(true);
         replyKeyboardMarkup.setSelective(false);
 
-//        List<KeyboardRow> keyboard = new ArrayList<>();
-
-//        KeyboardRow keyboardRow1 = new KeyboardRow();
-//        KeyboardRow keyboardRow2 = new KeyboardRow();
-
         KeyboardButton button_getNews = new KeyboardButton();
         KeyboardButton button_getResults = new KeyboardButton();
         KeyboardButton button_getMatches = new KeyboardButton();
-        KeyboardButton button_getStatsByMatchId = new KeyboardButton();
-
-
+        //KeyboardButton button_getStatsByMatchId = new KeyboardButton();
 
         button_getNews.setText("News");
         button_getResults.setText("Results");
-        button_getMatches.setText("Matches");
-        button_getStatsByMatchId.setText("Stats");
-
-//        keyboardRow1.add(button_getNews);
-//        keyboardRow1.add(button_getResults);
-//
-//        keyboardRow2.add(button_getMatches);
-//        keyboardRow2.add(button_getStatsByMatchId);
-//
-//        keyboard.add(keyboardRow1);
-//        keyboard.add(keyboardRow2);
+        button_getMatches.setText("Teams");
+        //button_getStatsByMatchId.setText("Stats");
 
         replyKeyboardMarkup.setKeyboard(getKeyboardAsRowsList(
                 getKeyboardButtonsRow(button_getNews, button_getResults),
-                getKeyboardButtonsRow(button_getMatches, button_getStatsByMatchId)
+                getKeyboardButtonsRow(button_getMatches)
         ));
 
         SendMessage replyKeyboardMessage = new SendMessage();
