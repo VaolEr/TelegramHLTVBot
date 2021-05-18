@@ -81,7 +81,7 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
         Message message;
         String chatId;
 
-        if(update.hasCallbackQuery() && !update.hasMessage()) {
+        if (update.hasCallbackQuery() && !update.hasMessage()) {
             callbackQuery = update.getCallbackQuery();
             chatId = callbackQuery.getMessage().getChatId().toString();
             message = update.getMessage();
@@ -102,7 +102,7 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
             String callbackTeamName;
             try {
                 callbackTeamName = update.getCallbackQuery().getData().split("_")[1];
-            } catch (Exception e){
+            } catch (Exception e) {
                 log.info(e.getMessage());
                 callbackTeamName = "";
             }
@@ -116,7 +116,7 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
 
                     for (SendMessage sendMessage : messages) {
                         try {
-                            if(!sendMessage.getText().equals(emptySendMessageText)) {
+                            if (!sendMessage.getText().equals(emptySendMessageText)) {
                                 execute(sendMessage);
                                 allMessagesAreEmpty = false;
                             }
@@ -125,7 +125,7 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                         }
                     }
 
-                    if(allMessagesAreEmpty){
+                    if (allMessagesAreEmpty) {
                         return SendMessage.builder()
                                 .chatId(chatId)
                                 .text(noResultsForTeamSendMessageText)
@@ -140,100 +140,85 @@ public class TelegramHLTVBot extends TelegramWebhookBot {
                 default:
                     return callbackQueryParser.processCallbackQuery(update.getCallbackQuery());
             }
-        } else{
+        } else {
 
             SendMessage sendMessage = new SendMessage();
 
-//            if (message != null && message.hasText()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMMM-d HH:mm:ss", Locale.ENGLISH);
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMMM-d HH:mm:ss", Locale.ENGLISH);
+            String userName;
+            boolean isBot;
+            String messageDateTime;
+            String messageText;
 
-                String userName;
-                boolean isBot;
-                //Long chatId;
-                String messageDateTime;
-                String messageText;
-
-                userName = message.getFrom().getUserName();
-                isBot = message.getFrom().getIsBot();
-                //chatId = message.getChatId().toString();
-                messageDateTime = LocalDateTime.ofEpochSecond(message.getDate(), 0, ZoneOffset.ofHours(3)).format(formatter);
-                messageText = message.getText();
+            userName = message.getFrom().getUserName();
+            isBot = message.getFrom().getIsBot();
+            messageDateTime = LocalDateTime.ofEpochSecond(message.getDate(), 0, ZoneOffset.ofHours(3)).format(formatter);
+            messageText = message.getText();
 
 
-                log.info("New message from User: {}, isBot: {}, chatId: {}, date: {}, with text: {}",
-                        userName,
-                        isBot,
-                        chatId,
-                        messageDateTime,
-                        messageText);
+            log.info("New message from User: {}, isBot: {}, chatId: {}, date: {}, with text: {}",
+                    userName,
+                    isBot,
+                    chatId,
+                    messageDateTime,
+                    messageText);
 
+            switch (Objects.requireNonNull(messageText)) {
 
-                switch (Objects.requireNonNull(update.getMessage()).getText()) {
-                    case ("KBD"):
-                        log.debug("Inline keyboard was asked.");
-                        return telegramHLTVBotInlineKeyboard.sendInlineKeyBoardMessage(message.getChatId().toString());
-                    case ("/teams"):
-                        log.debug("Inline teams keyboard was asked.");
-                        return telegramHLTVBotTeamsInlineKeyboard.sendInlineKeyBoardMessage(message.getChatId().toString());
-                    //break;
-                    case ("/KBD"):
-                        log.debug("Reply keyboard was asked.");
-                        return telegramHLTVBotReplyKeyboard.sendReplyKeyBoardMessage(message.getChatId().toString());
-                    //break;
-                    case ("News"):
-                        log.debug("News are requested.");
+                case ("/kbd"):
+                case ("KBD"):
+                    log.debug("Reply keyboard was asked.");
+                    return telegramHLTVBotReplyKeyboard.sendReplyKeyBoardMessage(chatId);
+                //break;
+                case ("/teams"):
+                case ("Teams"):
+                    log.debug("Inline teams keyboard was asked.");
+                    return telegramHLTVBotTeamsInlineKeyboard.sendInlineKeyBoardMessage(chatId);
+                //break;
+                case ("/news"):
+                case ("News"):
+                    log.debug("News are requested.");
 
-                        List<HltvApiNews> newsList = hltvApiNewsService.getNews(); // get list of News
+                    List<HltvApiNews> newsList = hltvApiNewsService.getNews(); // get list of News
 
-                        for (HltvApiNews news : newsList) {
-                            try {
-                                execute(hltvApiNewsService.prepareNewsMessage(message, news));
-                            } catch (TelegramApiException e) {
-                                log.info(e.fillInStackTrace().toString());
-                            }
+                    for (HltvApiNews news : newsList) {
+                        try {
+                            execute(hltvApiNewsService.prepareNewsMessage(message, news));
+                        } catch (TelegramApiException e) {
+                            log.info(e.fillInStackTrace().toString());
+                            //TODO add return there with message for user about error???
                         }
+                    }
 
-                        return SendMessage.builder()
-                                .chatId(chatId)
-                                .text("This is all news what I found!")
-                                .build();
-                    case ("Results"):
-                        log.debug("Results are requested.");
+                    return SendMessage.builder()
+                            .chatId(chatId)
+                            .text("This is all news what I found!")
+                            .build();
+                case ("/results"):
+                case ("Results"):
+                    log.debug("Results are requested.");
 
-                        List<HltvApiResults> resultsList = hltvApiResultsService.getResults();
+                    List<HltvApiResults> resultsList = hltvApiResultsService.getResults();
 
-                        for(HltvApiResults result : resultsList){
-                            try {
-                                execute(hltvApiResultsService.prepareResultsMessage(message, result));
-                            } catch (TelegramApiException e) {
-                                log.info(e.fillInStackTrace().toString());
-                            }
+                    for (HltvApiResults result : resultsList) {
+                        try {
+                            execute(hltvApiResultsService.prepareResultsMessage(message, result));
+                        } catch (TelegramApiException e) {
+                            log.info(e.fillInStackTrace().toString());
                         }
+                    }
 
-                        return SendMessage.builder()
-                                .chatId(chatId)
-                                .text("This is all what I found!")
-                                .build();
+                    return SendMessage.builder()
+                            .chatId(chatId)
+                            .text("This is all what I found!")
+                            .build();
 
-                    case ("Matches"):
-                        log.debug("Matches are requested.");
-                        hltvApiMatchesService.getMatches();
-                        sendMessage.setChatId(chatId);
-                        sendMessage.setText("Matches are cooking!");
-                        return sendMessage;
-                    //break;
-                    case ("Stats"):
-                        log.debug("Stats are requested.");
-                        hltvApiStatsbyIdService.getStats();
-                        sendMessage.setChatId(chatId);
-                        sendMessage.setText("For get statistic type '/getStats+/matches/matchId/matchFullName'");
-                        return sendMessage;
                 default:
                     sendMessage.setChatId(chatId.toString());
-                    sendMessage.setText("Well, all information looks like noise until you break the code.");
+                    sendMessage.setText("I don't know that command. Please, type \"/\" for display commands list.");
                     return sendMessage;
-                }
+            }
         }
 
     }
