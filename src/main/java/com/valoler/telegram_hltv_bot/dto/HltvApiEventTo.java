@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class HltvApiEventTo {
-    String name;
-    String crest;
+    private String name;
+    private String crest;
 
     @Override
     public String toString() {
