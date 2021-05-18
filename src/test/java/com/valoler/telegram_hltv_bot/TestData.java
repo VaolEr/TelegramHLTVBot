@@ -19,7 +19,7 @@ public class TestData {
 
     // Match test data block
     public static final Integer TEST_MATCH_ID = 778;
-    public static final String TEST_MATCH_LINK = "http:\\localhost:8080";
+    public static final String TEST_MATCH_LINK = "http://test.matchLink.com";
     public static final String TEST_MATCH_TIME = "yyyy-MMMM-d HH:mm:ss";
     public static final Event TEST_MATCH_EVENT;
     static {
@@ -35,17 +35,23 @@ public class TestData {
     public static final String TEST_TEAM_CREST = "Test Team Crest";
     public static final Integer TEST_TEAM_RESULT = 16;
 
+    // Match test data block
+    public static final String TEST_NEWS_TITLE = "Test News Title";
+    public static final String TEST_NEWS_DESCRIPTION = "Test News Description";
+    public static final String TEST_NEWS_LINK = "http://test.newsLink.com";
+    public static final String TEST_NEWS_TIME = "yyyy-MMMM-d HH:mm:ss";
+
     public static final HltvApiNews TEST_HLTVAPI_NEWS = new HltvApiNews();
 
     static {
-        TEST_HLTVAPI_NEWS.setTitle("Test Title");
+        TEST_HLTVAPI_NEWS.setTitle(TEST_NEWS_TITLE);
         try {
-            TEST_HLTVAPI_NEWS.setLink(new URL("http:\\localhost:8080"));
+            TEST_HLTVAPI_NEWS.setLink(new URL(TEST_NEWS_LINK));
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        TEST_HLTVAPI_NEWS.setTime("yyyy-MMMM-d HH:mm:ss");
-        TEST_HLTVAPI_NEWS.setDescription("Test News Description");
+        TEST_HLTVAPI_NEWS.setTime(TEST_NEWS_TIME);
+        TEST_HLTVAPI_NEWS.setDescription(TEST_NEWS_DESCRIPTION);
     }
 
     public static final HltvApiResults TEST_HLTVAPI_RESULT = new HltvApiResults();
