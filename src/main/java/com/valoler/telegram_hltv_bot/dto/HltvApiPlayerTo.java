@@ -9,21 +9,21 @@ import lombok.Setter;
 public class HltvApiPlayerTo {
 
     //@JsonProperty("playerName")
-    String playerName;
+    private String playerName;
     //@JsonProperty("playerId")
-    String playerId;
+    private String playerId;
     //@JsonProperty("kills")
-    Integer kills;
+    private Integer kills;
     //@JsonProperty("deaths")
-    Integer deaths;
+    private Integer deaths;
     //@JsonProperty("plusMinus")
-    Integer plusMinus;
+    private Integer plusMinus;
     //@JsonProperty("adr")
-    Double adr;
+    private Double adr;
     //@JsonProperty("kast")
-    Double kast;
+    private Double kast;
     //@JsonProperty("rating")
-    Double rating;
+    private Double rating;
 
     @Override
     public String toString() {
