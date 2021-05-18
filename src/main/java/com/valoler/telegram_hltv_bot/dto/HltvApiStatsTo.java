@@ -9,7 +9,7 @@ import java.util.Arrays;
 @Setter
 public class HltvApiStatsTo {
 
-    HltvApiPlayerTo[] hltvApiPlayerTos;
+    private HltvApiPlayerTo[] hltvApiPlayerTos;
 
     @Override
     public String toString() {
