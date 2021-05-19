@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class HltvApiMapsTest {
+public class HltvApiTeamsTest {
 
     @BeforeEach
     protected void setUp(){
@@ -13,12 +13,12 @@ public class HltvApiMapsTest {
     }
 
     @Test
-    public void hltvApiMaps_getCodeTest(){
-        assertEquals("-", HltvApiMaps.CONFLICT.getCode());
+    protected void getCallbackRequestNameTest(){
+        assertEquals("NAVI", HltvApiTeams.NAVI.getCallbackRequestName());
     }
 
     @Test
-    public void hltvApiMaps_getNameTest(){
-        assertEquals("Conflict situation", HltvApiMaps.CONFLICT.getName());
+    protected void getHltvApiNameTest(){
+        assertEquals("Natus Vincere", HltvApiTeams.NAVI.getHltvApiName());
     }
 }
