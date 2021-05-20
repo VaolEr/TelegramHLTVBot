@@ -6,16 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
-import java.util.Collections;
 
 import static com.valoler.telegram_hltv_bot.TestData.*;
 import static com.valoler.telegram_hltv_bot.TestData.TEST_TEAM_TO_2;
@@ -25,10 +20,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class HltvApiMatchesServiceTest {
-
-    @Mock
-    RestTemplate restTemplate;
+public class HltvApiMatchesServiceTest extends AbstractServiceTest {
 
     @InjectMocks
     HltvApiMatchesService matchesService;
@@ -36,12 +28,12 @@ public class HltvApiMatchesServiceTest {
     HltvApiMatchTo hltvApiMatchTo;
     HltvApiTeamTo[] teams;
 
-    URL url;
+
     String path = "/matches";
 
     @BeforeEach
     protected void setUp() throws MalformedURLException {
-        url = new URL("https://hltv-api.vercel.app/api");
+
 
         hltvApiMatchTo = new HltvApiMatchTo();
 
@@ -69,11 +61,6 @@ public class HltvApiMatchesServiceTest {
     public void getMatchesTest(){
         HltvApiMatchTo[] hltvApiMatchTos = new HltvApiMatchTo[1];
         hltvApiMatchTos[0] = hltvApiMatchTo;
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.set("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0");
-        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
         ResponseEntity<HltvApiMatchTo[]> response = new ResponseEntity<HltvApiMatchTo[]>(hltvApiMatchTos, HttpStatus.ACCEPTED);
 

@@ -1,6 +1,5 @@
 package com.valoler.telegram_hltv_bot.service;
 
-import com.valoler.telegram_hltv_bot.dto.HltvApiMatchTo;
 import com.valoler.telegram_hltv_bot.dto.HltvApiNewsTo;
 import com.valoler.telegram_hltv_bot.model.HltvApiNews;
 import com.valoler.telegram_hltv_bot.util.HltvApiNewsUtil;
@@ -8,17 +7,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
-import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 import static com.valoler.telegram_hltv_bot.TestData.TEST_CHAT_ID;
@@ -29,21 +24,11 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class HltvApiNewsServiceTest {
-
-    @Mock
-    RestTemplate restTemplate;
-    @Mock
-    LocaleMessageService localeMessageService;
-
-    @Mock
-    Message message;
+public class HltvApiNewsServiceTest extends AbstractServiceTest{
 
     @InjectMocks
-    HltvApiNewsService newsService;
+    private HltvApiNewsService newsService;
 
-
-    URL url;
     String path = "/matches";
 
     HltvApiNews hltvApiNews;
@@ -52,7 +37,8 @@ public class HltvApiNewsServiceTest {
 
     @BeforeEach
     protected void setUp() throws MalformedURLException {
-        url = new URL("https://hltv-api.vercel.app/api");
+
+        super.setUp();
 
         hltvApiNews = TEST_HLTVAPI_NEWS;
         newsList = new ArrayList<>();
@@ -70,10 +56,6 @@ public class HltvApiNewsServiceTest {
     @Test
     @DisplayName("Should return correct news list")
     public void hltvApiNewsService_getNewsTest(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.set("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0");
-        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
         ResponseEntity<HltvApiNewsTo[]> response = new ResponseEntity<HltvApiNewsTo[]>(newsTos, HttpStatus.ACCEPTED);
 

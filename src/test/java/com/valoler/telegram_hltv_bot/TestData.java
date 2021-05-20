@@ -6,6 +6,7 @@ import com.valoler.telegram_hltv_bot.model.Event;
 import com.valoler.telegram_hltv_bot.model.HltvApiNews;
 import com.valoler.telegram_hltv_bot.model.HltvApiResults;
 import com.valoler.telegram_hltv_bot.model.HltvApiTeam;
+import com.valoler.telegram_hltv_bot.util.HltvApiTeamUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,7 +34,7 @@ public class TestData {
     public static final String TEST_MATCH_MAPS = "Test match maps";
 
     // Team test data block
-    public static final String TEST_TEAM_NAME = "Test Team Name";
+    public static final String TEST_TEAM_NAME = "Natus Vincere";
     public static final String TEST_TEAM_CREST = "Test Team Crest";
     public static final Integer TEST_TEAM_RESULT = 16;
     public static final HltvApiTeamTo TEST_TEAM_TO_1;
@@ -104,8 +105,8 @@ public class TestData {
 
     static {
         TEST_HLTVAPI_RESULT.setMatchId("123456789");
-        TEST_HLTVAPI_RESULT.setTeam1(new HltvApiTeam());
-        TEST_HLTVAPI_RESULT.setTeam2(new HltvApiTeam());
+        TEST_HLTVAPI_RESULT.setTeam1(HltvApiTeamUtil.fromHltvApiTeamTo(TEST_TEAM_TO_1));
+        TEST_HLTVAPI_RESULT.setTeam2(HltvApiTeamUtil.fromHltvApiTeamTo(TEST_TEAM_TO_2));
         TEST_HLTVAPI_RESULT.setTime("yyyy-MMMM-d HH:mm:ss");
         TEST_HLTVAPI_RESULT.setEvent(TEST_EVENT_NAME);
         TEST_HLTVAPI_RESULT.setMaps("Test Maps");
