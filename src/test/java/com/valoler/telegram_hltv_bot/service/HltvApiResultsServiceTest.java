@@ -79,6 +79,20 @@ public class HltvApiResultsServiceTest extends AbstractServiceTest{
     }
 
     @Test
+    @DisplayName("Should return correct message from prepareResultsMessage")
+    public void hltvApiResultsService_prepareResultsMessageTest(){
+        when(message.getChatId()).thenReturn(123456L);
+        when(localeMessageService.getMessage(anyString())).thenReturn("Test button text");
+
+        sendMessage.setChatId(TEST_CHAT_ID);
+        sendMessage.setReplyMarkup(resultsService.getInlineKeyboard(hltvApiResults));
+        sendMessage.enableMarkdown(true);
+        sendMessage.setText(resultsService.prepareMessageText(hltvApiResults));
+
+        assertEquals(sendMessage, resultsService.prepareResultsMessage(message, hltvApiResults));
+    }
+
+    @Test
     @DisplayName("Should return correct message")
     public void hltvApiResultsService_prepareResultsMessageOrReturnEmptyMessageTest(){
 

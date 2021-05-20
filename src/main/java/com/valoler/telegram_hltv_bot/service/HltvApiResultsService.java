@@ -74,28 +74,6 @@ public class HltvApiResultsService {
         sendMessage.setReplyMarkup(getInlineKeyboard(results));
         //Enable markdown formatting for format message text
         sendMessage.enableMarkdown(true);
-        //Create template for all news and fill it from HltvApiNews objects
-//        Formatter messageText = new Formatter();
-//
-//        Map<String, String> hltvApiMaps = new HashMap<>();
-//        for (HltvApiMaps map : HltvApiMaps.values()) {
-//            hltvApiMaps.put(map.getCode(), map.getName());
-//        }
-//
-//        messageText.format("* %S *%n" +                          // Event name
-//                        "%n" +                                  // space
-//                        "Maps: %s%n" +                          // Maps: if bo1 - map name, else - bo2, bo3
-//                        "%n" +                                  // space
-//                        "[%S]() \\[*%d*] vs \\[*%d*] [%S]()%n" +  // Team 1 (logo) [score] vs [score] Team 2 (logo)
-//                        "%n" +                                  // space
-//                        "Time: %s",                             // Time, when game was played
-//                results.getEvent(),
-//                hltvApiMaps.get(results.getMaps()),
-//                results.getTeam1().getName(), results.getTeam1().getResult(), results.getTeam2().getResult(), results.getTeam2().getName(),
-//                results.getTime());
-//
-//        //sendMessage1.setText("[ ](https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/200px-Stack_Overflow_logo.svg.png)" + news.getDescription()); //message with image
-//        sendMessage.setText(String.valueOf(messageText));
         sendMessage.setText(prepareMessageText(results));
         return sendMessage;
     }
@@ -112,27 +90,6 @@ public class HltvApiResultsService {
             sendMessage.setReplyMarkup(getInlineKeyboard(results));
             //Enable markdown formatting for format message text
             sendMessage.enableMarkdown(true);
-            //Create template for all news and fill it from HltvApiNews objects
-//            Formatter messageText = new Formatter();
-//
-//            Map<String, String> hltvApiMaps = new HashMap<>();
-//            for (HltvApiMaps map : HltvApiMaps.values()) {
-//                hltvApiMaps.put(map.getCode(), map.getName());
-//            }
-//
-//            messageText.format("* %S *%n" +                          // Event name
-//                            "%n" +                                  // space
-//                            "Maps: %s%n" +                          // Maps: if bo1 - map name, else - bo2, bo3
-//                            "%n" +                                  // space
-//                            "[%S]() \\[*%d*] vs \\[*%d*] [%S]()%n" +  // Team 1 (logo) [score] vs [score] Team 2 (logo)
-//                            "%n" +                                  // space
-//                            "Time: %s",                             // Time, when game was played
-//                    results.getEvent(),
-//                    hltvApiMaps.get(results.getMaps()),
-//                    results.getTeam1().getName(), results.getTeam1().getResult(), results.getTeam2().getResult(), results.getTeam2().getName(),
-//                    results.getTime());
-//
-//            sendMessage.setText(String.valueOf(messageText));
             sendMessage.setText(prepareMessageText(results));
 
         } else {
