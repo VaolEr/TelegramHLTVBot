@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class HltvApiResults {
+public class HltvApiResults implements Cloneable{
 
     private String event;
     private String maps;
@@ -26,5 +26,10 @@ public class HltvApiResults {
                 ", team2=" + team2 +
                 ", matchId='" + matchId + '\'' +
                 '}';
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

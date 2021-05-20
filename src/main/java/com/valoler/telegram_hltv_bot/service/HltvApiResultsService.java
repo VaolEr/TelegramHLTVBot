@@ -66,112 +66,74 @@ public class HltvApiResultsService {
 
 
     public SendMessage prepareResultsMessage(Message message, HltvApiResults results) {
-
-            // Create new SendMessage
-            SendMessage sendMessage = new SendMessage();
-            // Set chatID to sendMessage
-            sendMessage.setChatId(message.getChatId().toString());
-            // Init new inline keyboard markup
-            InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-            // Create new inline keyboard button
-            InlineKeyboardButton button_resultsUrl = new InlineKeyboardButton();
-
-            button_resultsUrl.setText(localeMessageService.getMessage("inlineKeyboard.results.read"));
-            button_resultsUrl.setUrl("https://www.hltv.org" + results.getMatchId());
-            // Create new inline keyboard row for store buttons
-
-            List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-            keyboardButtonsRow1.add(button_resultsUrl);
-            // Create new rows lLst for store keyboard's rows
-            List<List<InlineKeyboardButton>> rowsList = new ArrayList<>();
-            rowsList.add(keyboardButtonsRow1);
-            // Set created keyboard to markup
-            inlineKeyboardMarkup.setKeyboard(rowsList);
-            // Set markup as message parametr
-            sendMessage.setReplyMarkup(inlineKeyboardMarkup);
-            //Enable markdown formatting for format message text
-            sendMessage.enableMarkdown(true);
-            //Create template for all news and fill it from HltvApiNews objects
-            Formatter messageText = new Formatter();
-
-            Map<String, String> hltvApiMaps = new HashMap<>();
-            for (HltvApiMaps map : HltvApiMaps.values()) {
-                hltvApiMaps.put(map.getCode(), map.getName());
-            }
-
-            messageText.format("* %S *%n" +                          // Event name
-                            "%n" +                                  // space
-                            "Maps: %s%n" +                          // Maps: if bo1 - map name, else - bo2, bo3
-                            "%n" +                                  // space
-                            "[%S]() \\[*%d*] vs \\[*%d*] [%S]()%n" +  // Team 1 (logo) [score] vs [score] Team 2 (logo)
-                            "%n" +                                  // space
-                            "Time: %s",                             // Time, when game was played
-                    results.getEvent(),
-                    hltvApiMaps.get(results.getMaps()),
-                    results.getTeam1().getName(), results.getTeam1().getResult(), results.getTeam2().getResult(), results.getTeam2().getName(),
-                    results.getTime());
-
-            //sendMessage1.setText("[ ](https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Stack_Overflow_logo.svg/200px-Stack_Overflow_logo.svg.png)" + news.getDescription()); //message with image
-            sendMessage.setText(String.valueOf(messageText));
-
-            return sendMessage;
+        // Create new SendMessage
+        SendMessage sendMessage = new SendMessage();
+        // Set chatID to sendMessage
+        sendMessage.setChatId(message.getChatId().toString());
+        // Set markup as message parametr
+        sendMessage.setReplyMarkup(getInlineKeyboard(results));
+        //Enable markdown formatting for format message text
+        sendMessage.enableMarkdown(true);
+        sendMessage.setText(prepareMessageText(results));
+        return sendMessage;
     }
 
-        public SendMessage prepareResultsMessageOrReturnEmptyMessage(Message message, HltvApiResults results, String callbackCommandName) {
+    public SendMessage prepareResultsMessageOrReturnEmptyMessage(Message message, HltvApiResults results, String callbackCommandName) {
+        String commandName = HltvApiTeams.valueOf(callbackCommandName).getHltvApiName();
+        // Create new SendMessage
+        SendMessage sendMessage = new SendMessage();
+        // Set chatID to sendMessage
+        sendMessage.setChatId(message.getChatId().toString());
 
-            String commandName = HltvApiTeams.valueOf(callbackCommandName).getHltvApiName();
+        if (results.getTeam1().getName().equalsIgnoreCase(commandName) || results.getTeam2().getName().equalsIgnoreCase(commandName)) {
+            // Set markup as message parametr
+            sendMessage.setReplyMarkup(getInlineKeyboard(results));
+            //Enable markdown formatting for format message text
+            sendMessage.enableMarkdown(true);
+            sendMessage.setText(prepareMessageText(results));
 
-            // Create new SendMessage
-            SendMessage sendMessage = new SendMessage();
-            // Set chatID to sendMessage
-            sendMessage.setChatId(message.getChatId().toString());
-
-            if(results.getTeam1().getName().equalsIgnoreCase(commandName) || results.getTeam2().getName().equalsIgnoreCase(commandName)) {
-                // Init new inline keyboard markup
-                InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-                // Create new inline keyboard button
-                InlineKeyboardButton button_resultsUrl = new InlineKeyboardButton();
-
-                button_resultsUrl.setText(localeMessageService.getMessage("inlineKeyboard.results.read"));
-                button_resultsUrl.setUrl("https://www.hltv.org" + results.getMatchId());
-                // Create new inline keyboard row for store buttons
-
-                List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
-                keyboardButtonsRow1.add(button_resultsUrl);
-                // Create new rows lLst for store keyboard's rows
-                List<List<InlineKeyboardButton>> rowsList = new ArrayList<>();
-                rowsList.add(keyboardButtonsRow1);
-                // Set created keyboard to markup
-                inlineKeyboardMarkup.setKeyboard(rowsList);
-                // Set markup as message parametr
-                sendMessage.setReplyMarkup(inlineKeyboardMarkup);
-                //Enable markdown formatting for format message text
-                sendMessage.enableMarkdown(true);
-                //Create template for all news and fill it from HltvApiNews objects
-                Formatter messageText = new Formatter();
-
-                Map<String, String> hltvApiMaps = new HashMap<>();
-                for (HltvApiMaps map : HltvApiMaps.values()) {
-                    hltvApiMaps.put(map.getCode(), map.getName());
-                }
-
-                messageText.format("* %S *%n" +                          // Event name
-                                "%n" +                                  // space
-                                "Maps: %s%n" +                          // Maps: if bo1 - map name, else - bo2, bo3
-                                "%n" +                                  // space
-                                "[%S]() \\[*%d*] vs \\[*%d*] [%S]()%n" +  // Team 1 (logo) [score] vs [score] Team 2 (logo)
-                                "%n" +                                  // space
-                                "Time: %s",                             // Time, when game was played
-                        results.getEvent(),
-                        hltvApiMaps.get(results.getMaps()),
-                        results.getTeam1().getName(), results.getTeam1().getResult(), results.getTeam2().getResult(), results.getTeam2().getName(),
-                        results.getTime());
-
-                sendMessage.setText(String.valueOf(messageText));
-
-            } else {
-                sendMessage.setText(emptySendMessageText);
-            }
-            return sendMessage;
+        } else {
+            sendMessage.setText(emptySendMessageText);
         }
+        return sendMessage;
+    }
+
+    public InlineKeyboardMarkup getInlineKeyboard(HltvApiResults results) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        // Create new inline keyboard button
+        InlineKeyboardButton button_resultsUrl = new InlineKeyboardButton();
+        button_resultsUrl.setText(localeMessageService.getMessage("inlineKeyboard.results.read"));
+        button_resultsUrl.setUrl("https://www.hltv.org" + results.getMatchId());
+        // Create new inline keyboard row for store buttons
+        List<InlineKeyboardButton> keyboardButtonsRow1 = new ArrayList<>();
+        keyboardButtonsRow1.add(button_resultsUrl);
+        // Create new rows lLst for store keyboard's rows
+        List<List<InlineKeyboardButton>> rowsList = new ArrayList<>();
+        rowsList.add(keyboardButtonsRow1);
+        // Set created keyboard to markup
+        inlineKeyboardMarkup.setKeyboard(rowsList);
+
+        return inlineKeyboardMarkup;
+    }
+
+    public String prepareMessageText(HltvApiResults results){
+        Map<String, String> hltvApiMaps = new HashMap<>();
+        for (HltvApiMaps map : HltvApiMaps.values()) {
+            hltvApiMaps.put(map.getCode(), map.getName());
+        }
+        Formatter messageText = new Formatter();
+
+        messageText.format("* %S *%n" +                          // Event name
+                        "%n" +                                  // space
+                        "Maps: %s%n" +                          // Maps: if bo1 - map name, else - bo2, bo3
+                        "%n" +                                  // space
+                        "[%S]() \\[*%d*] vs \\[*%d*] [%S]()%n" +  // Team 1 (logo) [score] vs [score] Team 2 (logo)
+                        "%n" +                                  // space
+                        "Time: %s",                             // Time, when game was played
+                results.getEvent(),
+                hltvApiMaps.get(results.getMaps()),
+                results.getTeam1().getName(), results.getTeam1().getResult(), results.getTeam2().getResult(), results.getTeam2().getName(),
+                results.getTime());
+        return String.valueOf(messageText);
+    }
 }
