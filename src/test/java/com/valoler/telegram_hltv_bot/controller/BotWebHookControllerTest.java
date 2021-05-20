@@ -1,10 +1,12 @@
 package com.valoler.telegram_hltv_bot.controller;
 
+import com.valoler.telegram_hltv_bot.botapi.TelegramHLTVBot;
 import com.valoler.telegram_hltv_bot.botapi.TelegramHLTVBotTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,14 +14,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.servlet.MockMvc;
+import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.bots.AbsSender;
 
 import java.util.Collections;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -36,12 +41,15 @@ public class BotWebHookControllerTest {
     protected MockMvc mockMvc;
 
 
-    TelegramHLTVBotTest telegramHLTVBot = Mockito.mock(TelegramHLTVBotTest.class);
+    TelegramHLTVBot telegramHLTVBot = Mockito.mock(TelegramHLTVBot.class);
+
+    @InjectMocks
+    BotWebHookController botWebHookController;
 
     protected HttpHeaders headers;
 
-    @Autowired
-    private BotWebHookController controller;
+//    @Autowired
+//    private BotWebHookController controller;
 
     Update update;
     final String testChatID = "123456";
@@ -72,7 +80,7 @@ public class BotWebHookControllerTest {
     @Test
     @DisplayName("Check that context is creating BotWebHookController")
     public void contextLoads() {
-        assertThat(controller).isNotNull();
+        assertThat(botWebHookController).isNotNull();
     }
 
     @Test
@@ -82,13 +90,15 @@ public class BotWebHookControllerTest {
         //TODO write correct test. Read more info for it.
         SendMessage testMessage = new SendMessage(testChatID, "TestMessage");
 
-        //when(telegramHLTVBot.onWebhookUpdateReceived(update)).thenReturn("Ok");
+        //when(telegramHLTVBot.onWebhookUpdateReceived(update)).thenReturn();
 
-        this.mockMvc.perform(
-                post(path+"/telegram-HLTV-bot")
-                        .contentType(APPLICATION_JSON)
-                        .content("{\"quote\":\"Hasta la vista, baby\", \"movie\": \"Terminator\"}"))
-                .andDo(print())
-                .andExpect(status().isOk());
+//        this.mockMvc.perform(
+//                post(path+"/telegram-HLTV-bot")
+//                        .contentType(APPLICATION_JSON)
+//                        .content("{\"quote\":\"Hasta la vista, baby\", \"movie\": \"Terminator\"}"))
+//                .andDo(print())
+//                .andExpect(status().isOk());
+
+
     }
 }
